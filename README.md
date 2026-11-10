@@ -1,5 +1,7 @@
 # outbox-relay
 
+[![tests](https://github.com/kasevvlad/outbox-relay/actions/workflows/tests.yml/badge.svg)](https://github.com/kasevvlad/outbox-relay/actions/workflows/tests.yml)
+
 An implementation of the transactional outbox pattern in Go: a relay that reads events from a PostgreSQL table and publishes them to NATS JetStream. A learning project to understand how services can send events without losing them and without distributed transactions.
 
 The idea: your app writes the event into an `outbox` table **in the same transaction** as the business data. The relay picks up new rows and publishes them. If the transaction rolled back, there is no event; if it committed, the event will be published sooner or later, even if NATS was down at that moment.
